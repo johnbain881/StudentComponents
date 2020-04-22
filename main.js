@@ -74,12 +74,12 @@ const students = [
 ]
 
 
-const createStudentComponent = (name, subject, info, passFail, passFail2 = "", passFail3 = "") => {
+const createStudentComponent = (student) => {
     return `
         <div class="student">
-            <h1 class="${passFail}">${name}</h1>
-            <section class="${passFail2}">${subject}</section>
-            <aside class="${passFail3}">${info}</aside>
+            <h1 class="${student.status}">${student.name}</h1>
+            <section>${student.subject}</section>
+            <aside>${student.info}</aside>
         </div>
     `
 }
@@ -88,10 +88,10 @@ const createStudentComponent = (name, subject, info, passFail, passFail2 = "", p
 
 for (const student of students) {
     let studentComponent = document.createElement("div");
-    if (student.score >= 60) {
-        studentComponent.innerHTML = createStudentComponent(student.name, student.subject, student.info, "xx-large passing", "bordered dashed section--padded", "pushRight");
-    } else {
-        studentComponent.innerHTML = createStudentComponent(student.name, student.subject, student.info, "failing");
+    student.status = "passing"
+    if (student.score < 60) {
+        student.status = "failing" 
     }
+    studentComponent.innerHTML = createStudentComponent(student)
     document.getElementById("container").appendChild(studentComponent);
 }
